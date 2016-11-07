@@ -1,0 +1,62 @@
+<?php
+
+namespace ImageGallery\ImageGalleryBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass="ImageGallery\ImageGalleryBundle\Entity\Repository\ImageRepository")
+ * @ORM\Table(name="image")
+ * @ORM\HasLifecycleCallbacks
+ */
+class Image
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Gallery", inversedBy="images")
+     * @ORM\JoinColumn(name="album_id", referencedColumnName="id")
+     */
+    protected $album;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    protected $image;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $desc;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $created;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $updated;
+
+    public function __construct()
+    {
+        $this->setCreated(new \DateTime());
+        $this->setUpdated(new \DateTime());
+
+        $this->setApproved(true);
+    }
+
+    /**
+     * @ORM\preUpdate
+     */
+    public function setUpdatedValue()
+    {
+        $this->setUpdated(new \DateTime());
+    }
+}

@@ -2,6 +2,7 @@
 
 namespace ImageGallery\ImageGalleryBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -38,6 +39,9 @@ class Gallery
      */
     protected $albumImage;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Image", mappedBy="gallery")
+     */
     protected $images;
 
     /**
@@ -200,6 +204,8 @@ class Gallery
 
     public function __construct()
     {
+        $this->images = new ArrayCollection();
+
         $this->setCreated(new \DateTime());
         $this->setUpdated(new \DateTime());
     }
@@ -210,5 +216,39 @@ class Gallery
     public function setUpdatedValue()
     {
         $this->setUpdated(new \DateTime());
+    }
+
+    /**
+     * Add image
+     *
+     * @param \ImageGallery\ImageGalleryBundle\Entity\Image $image
+     *
+     * @return Gallery
+     */
+    public function addImage(\ImageGallery\ImageGalleryBundle\Entity\Image $image)
+    {
+        $this->images[] = $image;
+
+        return $this;
+    }
+
+    /**
+     * Remove image
+     *
+     * @param \ImageGallery\ImageGalleryBundle\Entity\Image $image
+     */
+    public function removeImage(\ImageGallery\ImageGalleryBundle\Entity\Image $image)
+    {
+        $this->images->removeElement($image);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 }

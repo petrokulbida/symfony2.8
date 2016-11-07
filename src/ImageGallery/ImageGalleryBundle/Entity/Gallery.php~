@@ -2,6 +2,7 @@
 
 namespace ImageGallery\ImageGalleryBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -38,6 +39,9 @@ class Gallery
      */
     protected $albumImage;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Image", mappedBy="gallery")
+     */
     protected $images;
 
     /**
@@ -200,6 +204,8 @@ class Gallery
 
     public function __construct()
     {
+        $this->images = new ArrayCollection();
+
         $this->setCreated(new \DateTime());
         $this->setUpdated(new \DateTime());
     }

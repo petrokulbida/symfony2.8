@@ -10,4 +10,13 @@ namespace ImageGallery\ImageGalleryBundle\Entity\Repository;
  */
 class GalleryRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getAlbums($limit = null)
+    {
+        $qb = $this->createQueryBuilder('a')->select('a')->addOrderBy('a.created', 'DESC');
+
+        if (false === is_null($limit))
+            $qb->setMaxResults($limit);
+
+        return $qb->getQuery()->getResult();
+    }
 }

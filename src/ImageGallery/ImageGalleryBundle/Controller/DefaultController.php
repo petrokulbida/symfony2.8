@@ -8,13 +8,7 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $gallery = $em->createQueryBuilder()
-            ->select('g')
-            ->from('PetroImageGalleryBundle:Gallery', 'g')
-            ->addOrderBy('g.created', 'DESC')
-            ->getQuery()
-            ->getResult();
+        $gallery = $this->getDoctrine()->getManager()->getRepository('PetroImageGalleryBundle:Gallery')->getAlbums();
 
         return $this->render('PetroImageGalleryBundle:Default:index.html.twig', array(
             'gallery' => $gallery
