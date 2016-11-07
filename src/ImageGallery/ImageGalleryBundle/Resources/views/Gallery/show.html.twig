@@ -1,0 +1,16 @@
+{% extends 'PetroImageGalleryBundle::layout.html.twig' %}
+
+{% block title %}{{ album.albumTitle }}{% endblock %}
+
+{% block body %}
+    <article class="album">
+        <header>
+            <div class="date"><time datetime="{{ album.created|date('c') }}">{{ album.created|date('l, F j, Y') }}</time></div>
+            <h2>{{ album.albumTitle }}</h2>
+        </header>
+        <img src="{{ asset(['images/', album.albumImage]|join) }}" alt="{{ album.albumTitle }} image not found" class="large"/>
+        <div>
+            <p>{{ album.albumDesc }}</p>
+        </div>
+    </article>
+{% endblock %}

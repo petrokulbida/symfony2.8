@@ -9,3 +9,10 @@ petro_image_gallery_about:
     defaults: { _controller: PetroImageGalleryBundle:Default:about }
     requirements:
              methods:  GET
+
+petro_image_gallery_show:
+    path:  /{id}
+    defaults: { _controller: PetroImageGalleryBundle:Gallery:show }
+    requirements:
+             methods:  GET
+             id: \d+

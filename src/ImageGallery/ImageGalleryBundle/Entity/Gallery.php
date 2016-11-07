@@ -5,8 +5,9 @@ namespace ImageGallery\ImageGalleryBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ImageGallery\ImageGalleryBundle\Entity\Repository\GalleryRepository")
  * @ORM\Table(name="gallery")
+ * @ORM\HasLifecycleCallbacks
  */
 class Gallery
 {
@@ -195,5 +196,19 @@ class Gallery
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+    public function __construct()
+    {
+        $this->setCreated(new \DateTime());
+        $this->setUpdated(new \DateTime());
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedValue()
+    {
+        $this->setUpdated(new \DateTime());
     }
 }

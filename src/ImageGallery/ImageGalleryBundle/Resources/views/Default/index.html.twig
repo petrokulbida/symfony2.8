@@ -1,5 +1,23 @@
 {% extends 'PetroImageGalleryBundle::layout.html.twig' %}
 
 {% block body %}
-    Gallery homepage
+    {% for album in gallery %}
+        <article class="blog">
+            <div class="date"><time datetime="{{ album.created|date('c') }}">{{ album.created|date('l, F j, Y') }}</time></div>
+            <header>
+                <h2><a href="{{ path('petro_image_gallery_show', { 'id': album.id }) }}">{{ album.albumTitle }}</a></h2>
+            </header>
+
+            <img src="{{ asset(['images/', album.albumImage]|join) }}" width="150" height="110" align="left" style="margin-right:5px"/>
+            <div class="snippet">
+                <p>{{ album.albumDesc|slice(0, 80) }}</p>
+            </div>
+
+            <footer class="meta">
+                <p>Created by <span class="highlight">{{album.albumAuthor}}</span> at {{ album.created|date('h:iA') }}</p>
+            </footer>
+        </article>
+    {% else %}
+        <p>There are no albums in the gallery</p>
+    {% endfor %}
 {% endblock %}
