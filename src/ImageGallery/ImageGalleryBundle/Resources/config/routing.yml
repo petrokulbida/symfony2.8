@@ -1,0 +1,3 @@
+petro_image_gallery_homepage:
+    path:     /
+    defaults: { _controller: PetroImageGalleryBundle:Default:index }

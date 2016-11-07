@@ -1,0 +1,4 @@
+services:
+#    petro_image_gallery.example:
+#        class: ImageGallery\ImageGalleryBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
