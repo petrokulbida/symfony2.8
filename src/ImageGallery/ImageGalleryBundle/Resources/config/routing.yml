@@ -1,3 +1,11 @@
 petro_image_gallery_homepage:
     path:     /
     defaults: { _controller: PetroImageGalleryBundle:Default:index }
+    requirements:
+             methods:  GET
+
+petro_image_gallery_about:
+    path:   /about
+    defaults: { _controller: PetroImageGalleryBundle:Default:about }
+    requirements:
+             methods:  GET
