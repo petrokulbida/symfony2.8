@@ -1,13 +1,13 @@
 <?php
-// src/Blogger/BlogBundle/DataFixtures/ORM/BlogFixtures.php
 
 namespace ImageGallery\ImageGalleryBundle\DataFixtures\ORM;
 
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use ImageGallery\ImageGalleryBundle\Entity\Gallery;
 
-class GalleryFixtures implements FixtureInterface
+class GalleryFixtures extends AbstractFixture implements FixtureInterface
 {
     public function load(ObjectManager $manager)
     {
@@ -47,6 +47,17 @@ class GalleryFixtures implements FixtureInterface
         $manager->persist($album4);
 
         $manager->flush();
+
+        $this->addReference('album-0', $album);
+        $this->addReference('album-1', $album1);
+        $this->addReference('album-2', $album2);
+        $this->addReference('album-3', $album3);
+        $this->addReference('album-4', $album4);
+    }
+
+    public function getOrder()
+    {
+        return 1;
     }
 
 }

@@ -40,7 +40,7 @@ class Gallery
     protected $albumImage;
 
     /**
-     * @ORM\OneToMany(targetEntity="Image", mappedBy="gallery")
+     * @ORM\OneToMany(targetEntity="Images", mappedBy="parent"))
      */
     protected $images;
 
@@ -65,9 +65,23 @@ class Gallery
     }
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+
+        $this->setCreated(new \DateTime());
+        $this->setUpdated(new \DateTime());
+    }
+
+
+
+    /**
      * Set albumTitle
      *
      * @param string $albumTitle
+     *
      * @return Gallery
      */
     public function setAlbumTitle($albumTitle)
@@ -80,7 +94,7 @@ class Gallery
     /**
      * Get albumTitle
      *
-     * @return string 
+     * @return string
      */
     public function getAlbumTitle()
     {
@@ -91,6 +105,7 @@ class Gallery
      * Set albumAuthor
      *
      * @param string $albumAuthor
+     *
      * @return Gallery
      */
     public function setAlbumAuthor($albumAuthor)
@@ -103,7 +118,7 @@ class Gallery
     /**
      * Get albumAuthor
      *
-     * @return string 
+     * @return string
      */
     public function getAlbumAuthor()
     {
@@ -114,6 +129,7 @@ class Gallery
      * Set albumDesc
      *
      * @param string $albumDesc
+     *
      * @return Gallery
      */
     public function setAlbumDesc($albumDesc)
@@ -126,7 +142,7 @@ class Gallery
     /**
      * Get albumDesc
      *
-     * @return string 
+     * @return string
      */
     public function getAlbumDesc()
     {
@@ -137,6 +153,7 @@ class Gallery
      * Set albumImage
      *
      * @param string $albumImage
+     *
      * @return Gallery
      */
     public function setAlbumImage($albumImage)
@@ -149,7 +166,7 @@ class Gallery
     /**
      * Get albumImage
      *
-     * @return string 
+     * @return string
      */
     public function getAlbumImage()
     {
@@ -160,6 +177,7 @@ class Gallery
      * Set created
      *
      * @param \DateTime $created
+     *
      * @return Gallery
      */
     public function setCreated($created)
@@ -172,7 +190,7 @@ class Gallery
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -183,6 +201,7 @@ class Gallery
      * Set updated
      *
      * @param \DateTime $updated
+     *
      * @return Gallery
      */
     public function setUpdated($updated)
@@ -195,37 +214,21 @@ class Gallery
     /**
      * Get updated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdated()
     {
         return $this->updated;
     }
 
-    public function __construct()
-    {
-        $this->images = new ArrayCollection();
-
-        $this->setCreated(new \DateTime());
-        $this->setUpdated(new \DateTime());
-    }
-
-    /**
-     * @ORM\PreUpdate
-     */
-    public function setUpdatedValue()
-    {
-        $this->setUpdated(new \DateTime());
-    }
-
     /**
      * Add image
      *
-     * @param \ImageGallery\ImageGalleryBundle\Entity\Image $image
+     * @param \ImageGallery\ImageGalleryBundle\Entity\Images $image
      *
      * @return Gallery
      */
-    public function addImage(\ImageGallery\ImageGalleryBundle\Entity\Image $image)
+    public function addImage(\ImageGallery\ImageGalleryBundle\Entity\Images $image)
     {
         $this->images[] = $image;
 
@@ -235,9 +238,9 @@ class Gallery
     /**
      * Remove image
      *
-     * @param \ImageGallery\ImageGalleryBundle\Entity\Image $image
+     * @param \ImageGallery\ImageGalleryBundle\Entity\Images $image
      */
-    public function removeImage(\ImageGallery\ImageGalleryBundle\Entity\Image $image)
+    public function removeImage(\ImageGallery\ImageGalleryBundle\Entity\Images $image)
     {
         $this->images->removeElement($image);
     }

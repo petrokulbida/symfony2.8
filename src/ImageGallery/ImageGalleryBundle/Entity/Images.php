@@ -5,11 +5,11 @@ namespace ImageGallery\ImageGalleryBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="ImageGallery\ImageGalleryBundle\Entity\Repository\ImageRepository")
- * @ORM\Table(name="image")
+ * @ORM\Entity(repositoryClass="ImageGallery\ImageGalleryBundle\Entity\Repository\ImagesRepository")
+ * @ORM\Table(name="images")
  * @ORM\HasLifecycleCallbacks
  */
-class Image
+class Images
 {
     /**
      * @ORM\Id
@@ -20,19 +20,15 @@ class Image
 
     /**
      * @ORM\ManyToOne(targetEntity="Gallery", inversedBy="images")
-     * @ORM\JoinColumn(name="album_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
-    protected $album;
+    protected $parent;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
     protected $image;
 
-    /**
-     * @ORM\Column(type="text")
-     */
-    protected $desc;
 
     /**
      * @ORM\Column(type="datetime")
@@ -48,17 +44,8 @@ class Image
     {
         $this->setCreated(new \DateTime());
         $this->setUpdated(new \DateTime());
-
-        $this->setApproved(true);
     }
 
-    /**
-     * @ORM\preUpdate
-     */
-    public function setUpdatedValue()
-    {
-        $this->setUpdated(new \DateTime());
-    }
 
     /**
      * Get id
@@ -75,7 +62,7 @@ class Image
      *
      * @param string $image
      *
-     * @return Image
+     * @return Images
      */
     public function setImage($image)
     {
@@ -94,36 +81,13 @@ class Image
         return $this->image;
     }
 
-    /**
-     * Set desc
-     *
-     * @param string $desc
-     *
-     * @return Image
-     */
-    public function setDesc($desc)
-    {
-        $this->desc = $desc;
-
-        return $this;
-    }
-
-    /**
-     * Get desc
-     *
-     * @return string
-     */
-    public function getDesc()
-    {
-        return $this->desc;
-    }
 
     /**
      * Set created
      *
      * @param \DateTime $created
      *
-     * @return Image
+     * @return Images
      */
     public function setCreated($created)
     {
@@ -147,7 +111,7 @@ class Image
      *
      * @param \DateTime $updated
      *
-     * @return Image
+     * @return Images
      */
     public function setUpdated($updated)
     {
@@ -167,26 +131,26 @@ class Image
     }
 
     /**
-     * Set album
+     * Set parent
      *
-     * @param \ImageGallery\ImageGalleryBundle\Entity\Gallery $album
+     * @param \ImageGallery\ImageGalleryBundle\Entity\Gallery $parent
      *
-     * @return Image
+     * @return Images
      */
-    public function setAlbum(\ImageGallery\ImageGalleryBundle\Entity\Gallery $album = null)
+    public function setParent(\ImageGallery\ImageGalleryBundle\Entity\Gallery $parent = null)
     {
-        $this->album = $album;
+        $this->parent = $parent;
 
         return $this;
     }
 
     /**
-     * Get album
+     * Get parent
      *
      * @return \ImageGallery\ImageGalleryBundle\Entity\Gallery
      */
-    public function getAlbum()
+    public function getParent()
     {
-        return $this->album;
+        return $this->parent;
     }
 }

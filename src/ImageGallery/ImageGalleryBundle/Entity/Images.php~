@@ -5,11 +5,11 @@ namespace ImageGallery\ImageGalleryBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="ImageGallery\ImageGalleryBundle\Entity\Repository\ImageRepository")
- * @ORM\Table(name="image")
+ * @ORM\Entity(repositoryClass="ImageGallery\ImageGalleryBundle\Entity\Repository\ImagesRepository")
+ * @ORM\Table(name="images")
  * @ORM\HasLifecycleCallbacks
  */
-class Image
+class Images
 {
     /**
      * @ORM\Id
@@ -20,9 +20,9 @@ class Image
 
     /**
      * @ORM\ManyToOne(targetEntity="Gallery", inversedBy="images")
-     * @ORM\JoinColumn(name="album_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
-    protected $album;
+    protected $parent;
 
     /**
      * @ORM\Column(type="string", length=20)
@@ -50,13 +50,4 @@ class Image
         $this->setUpdated(new \DateTime());
     }
 
-    /**
-     * @ORM\preUpdate
-     */
-    public function setUpdatedValue()
-    {
-        $this->setUpdated(new \DateTime());
-    }
-
-    
 }
