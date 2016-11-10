@@ -2,6 +2,9 @@
 
 namespace ImageGallery\ImageGalleryBundle\Entity\Repository;
 
+use Doctrine\ORM\Query\ResultSetMapping;
+use ImageGallery\ImageGalleryBundle\Entity;
+use Knp\Bundle\PaginatorBundle;
 /**
  * GalleryRepository
  *
@@ -12,11 +15,27 @@ class GalleryRepository extends \Doctrine\ORM\EntityRepository
 {
     public function getAlbums($limit = null)
     {
-        $qb = $this->createQueryBuilder('a')->select('a')->addOrderBy('a.created', 'DESC');
+         $qb = $this->createQueryBuilder('a')->select('a')->addOrderBy('a.created', 'DESC');
 
-        if (false === is_null($limit))
+        if (!empty($limit))
             $qb->setMaxResults($limit);
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function getAlbumsWithImagesLimit10($limit = null)
+    {
+        $sql = "SELECT t0.*, t00.id, t00.parent_id, t00.image  FROM `gallery` t0
+                RIGHT JOIN `images` t00 ON t00.parent_id = t0.id
+                JOIN(
+                SELECT `t1`.*, COUNT(*) as `counter`
+                FROM `images` `t1` 
+                JOIN `images` `t2` ON `t1`.`parent_id` = `t2`.`parent_id` AND `t1`.`id` >= `t2`.`id` 
+                GROUP BY `t1`.`parent_id`, `t1`.`id` 
+                HAVING `counter` <= 10 
+                ORDER BY `t1`.`parent_id`, `t1`.`id`
+                ) t000 ON t000.id = t00.id";
+
+        return $this->getEntityManager()->getConnection()->executeQuery($sql)->fetchAll();
     }
 }

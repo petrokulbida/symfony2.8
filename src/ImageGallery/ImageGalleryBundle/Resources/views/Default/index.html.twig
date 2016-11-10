@@ -16,8 +16,20 @@
             <footer class="meta">
                 <p>Created by <span class="highlight">{{album.albumAuthor}}</span> at {{ album.created|date('h:iA') }}</p>
             </footer>
+            <div style="clear:both">
+        {% for img in images %}
+            {% if img.parent_id == album.id %}
+                <img src="{{ asset(['images/', img.image]|join) }}" width="70" height="50" align="left" style="margin:5px;"/>
+            {% endif %}
+        {% else %}
+            <p>There are no images in the album</p>
+        {% endfor %}
+            </div>
         </article>
     {% else %}
         <p>There are no albums in the gallery</p>
     {% endfor %}
+    <div>
+    {{ json }}
+    </div>
 {% endblock %}

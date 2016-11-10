@@ -29,7 +29,6 @@ class Images
      */
     protected $image;
 
-
     /**
      * @ORM\Column(type="datetime")
      */

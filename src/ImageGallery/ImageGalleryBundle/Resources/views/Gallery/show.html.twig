@@ -13,4 +13,10 @@
             <p>{{ album.albumDesc }}</p>
         </div>
     </article>
+    <section class="comments" id="comments">
+        <section class="previous-comments">
+            <h2>Images</h2>
+            {% include 'PetroImageGalleryBundle:Gallery:index.html.twig' with { 'pagination': pagination } %}
+        </section>
+    </section>
 {% endblock %}

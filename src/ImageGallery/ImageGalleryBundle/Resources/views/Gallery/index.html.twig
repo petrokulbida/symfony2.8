@@ -1,0 +1,23 @@
+<div>
+Total count: {{ pagination.getTotalItemCount }}
+</div>
+<div>{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</div>
+<div{% if pagination.isSorted('a.Title') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Title', 'a.title') }}</div>
+<div>{{ knp_pagination_sortable(pagination, 'Release', ['a.date', 'a.time']) }}</div>
+
+{% for img in pagination %}
+    <article class="comment {{ cycle(['odd', 'even'], loop.index0) }}" id="comment-{{ img.id }}">
+        <header>
+            <div style="float:left; margin-right:20px">
+                <div><time datetime="{{ img.created|date('c') }}">{{ img.created|date('l, F j, Y') }}</time></div>
+                <div><img src="{{ asset(['images/', img.image]|join) }}" width="150" height="110"style="margin:5px;"/></div>
+            </div>
+        </header>
+    </article>
+{% else %}
+    <p>There are no images for this album. Add first image...</p>
+{% endfor %}
+
+<div>
+{{ knp_pagination_render(pagination) }}
+</div>

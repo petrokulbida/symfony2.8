@@ -10,4 +10,15 @@ namespace ImageGallery\ImageGalleryBundle\Entity\Repository;
  */
 class ImagesRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getImagesForAlbum($albumId, $limit = 10)
+    {
+        $qb = $this->createQueryBuilder('i')
+            ->select('i')
+            ->where('i.parent = :parent_id')
+            ->addOrderBy('i.created')
+            ->setParameter('parent_id', $albumId)
+            ->setMaxResults($limit);
+
+        return $qb->getQuery();
+    }
 }
