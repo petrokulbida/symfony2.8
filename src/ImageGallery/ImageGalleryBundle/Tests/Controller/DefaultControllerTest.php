@@ -3,15 +3,22 @@
 namespace ImageGallery\ImageGalleryBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use ImageGallery\ImageGalleryBundle\Controller\DefaultController;
 
-class DefaultControllerTest extends WebTestCase
+class DefaultControllerTest extends \PHPUnit_Framework_TestCase
 {
-    public function testIndex()
+    public function testIndexAction()
     {
-        $client = static::createClient();
+        $templating = $this->getMock('Symfony\Bundle\FrameworkBundle\Templating\Engine');
+        $templating->expects($this->once())
+            ->method('render')
+            ->with('Application:Index:index')
+            ->will($this->returnValue('success'))
+        ;
 
-        $crawler = $client->request('GET', '/');
+        $controller = new DefaultController();
+        $controller->setContainer($templating);
 
-        $this->assertContains('Hello World', $client->getResponse()->getContent());
+        $this->assertEquals('success', $controller->indexAction());
     }
 }

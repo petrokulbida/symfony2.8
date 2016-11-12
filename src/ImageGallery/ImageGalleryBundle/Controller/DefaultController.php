@@ -28,4 +28,5 @@ class DefaultController extends Controller
     {
         return $this->render('PetroImageGalleryBundle:Default:about.html.twig');
     }
+
 }
